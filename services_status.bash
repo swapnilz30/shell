@@ -28,6 +28,8 @@ for service in ${services[@]}; do
         "inactive")
                echo ${red}$service " is inactive.${reset}"
                 ;;
+        "activating")
+               echo ${red}$service " is inactive.${reset}"
         esac
 
 done
