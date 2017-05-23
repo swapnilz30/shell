@@ -8,12 +8,26 @@ reset=`tput sgr0`
 services=(redis mongod elasticsearch php-fpm nginx uwsgi celeryd celerybeatd postgresql-9.4 tomcat cyops-auth)
 
 
+#for service in ${services[@]}; do
+#        service_status=`sudo systemctl  status $service  | grep Active | cut -d" " -f5`
+#       if [ "active" ==  $service_status ]
+#       then
+#              echo ${green}$service " is active.${reset}"
+#       else
+#              echo ${red}$service " is inactive.${reset}"
+#       fi
+#done
+
+
 for service in ${services[@]}; do
         service_status=`sudo systemctl  status $service  | grep Active | cut -d" " -f5`
-	if [ "active" ==  $service_status ]
-	then
-	       echo ${green}$service " is active.${reset}"
-	else
-	       echo ${red}$service " is inactive.${reset}"
-	fi
+        case "$service_status" in
+        "active")
+               echo ${green}$service " is active.${reset}"
+                ;;
+        "inactive")
+               echo ${red}$service " is inactive.${reset}"
+                ;;
+        esac
+
 done
