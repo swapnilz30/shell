@@ -17,7 +17,3 @@ for service in ${services[@]}; do
 	       echo ${red}$service " is inactive.${reset}"
 	fi
 done
-#service_status=`sudo systemctl  status redis  | grep Active | cut -d" " -f5`
-#
-#echo $service_status
-#
