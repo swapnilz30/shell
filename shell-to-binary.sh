@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script convert the shell script to binary.
+
 file_dir_path=`echo "$(dirname -- $script_name)"`
 dir_path=`echo "$(dirname -- $file_dir_path)"`
 echo "$dir_path"
