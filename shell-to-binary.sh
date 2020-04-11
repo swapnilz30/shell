@@ -2,17 +2,6 @@
 
 # This script convert the shell script to binary.
 
-file_dir_path=`echo "$(dirname -- $script_name)"`
-dir_path=`echo "$(dirname -- $file_dir_path)"`
-echo "$dir_path"
-echo "$file_dir_path"
-echo "$script_name"
-shc_version="3.8.9"
-shc_tar="shc-$shc_version.tgz"
-
-src_path="/usr/src"
-shc_man="/usr/local/man/man1/"
-
 exit_script(){
 
     # Exit the script.
@@ -48,7 +37,7 @@ download_shc_tgz(){
 
     # Downalod the tgz file.
     if [ ! -f $src_path/$shc_tar ];then
-        wget -P $src_path http://www.datsi.fi.upm.es/~frosal/sources/shc-$shc_version.tgz
+        sudo wget -P $src_path http://www.datsi.fi.upm.es/~frosal/sources/shc-$shc_version.tgz
         if [ $? -ne 0 ];then
             echo "Failed to download http://www.datsi.fi.upm.es/~frosal/sources/shc-$shc_version.tgz"
   	        exit 1
@@ -65,8 +54,8 @@ install_shc(){
         exit 1
     fi
 
-    make -C $src_path/shc-$shc_version
-    make install -C $src_path/shc-$shc_version
+    sudo make -C $src_path/shc-$shc_version
+    sudo make install -C $src_path/shc-$shc_version
 
     if [ $? -ne 0 ];then
         echo "Failed to installed."
@@ -74,7 +63,7 @@ install_shc(){
     fi
 
     # Convert shell script file to binary.
-    $src_path/shc-$shc_version/shc -r -f $script_name
+    sudo $src_path/shc-$shc_version/shc -r -f $script_name
 
     if [ $? -eq 0 ];then
        echo "Successully screated the file."
@@ -93,9 +82,18 @@ if [ -z $script_name ];then
     exit_script 1 
 fi
 
+file_dir_path=`echo "$(dirname -- $script_name)"`
+dir_path=`echo "$(dirname -- $file_dir_path)"`
+echo "$dir_path"
+echo "$file_dir_path"
+echo "$script_name"
+shc_version="3.8.9"
+shc_tar="shc-$shc_version.tgz"
+shc_man="/usr/local/man/man1/"
+src_path="/usr/src"
 
 if [ ! -d $shc_man ];then
-    mkdir -p $shc_man
+    sudo mkdir -p $shc_man
 fi
 
 check_require_pkgs
